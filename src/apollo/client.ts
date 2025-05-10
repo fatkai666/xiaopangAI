@@ -41,7 +41,7 @@ const retryLink = new RetryLink({
 
 const httpLink = new HttpLink({
   // Worker URL
-  uri: 'https://deepseek-graphql-worker.wangwenkai918.workers.dev',
+  uri: 'https://df0642d6-deepseek-graphql-worker.wangwenkai918.workers.dev/',
 });
 
 // 创建 Apollo Client
