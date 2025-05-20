@@ -212,17 +212,6 @@ export class CodeReviewService {
     };
   }
   
-  // 现在从内容中提取摘要，不再使用默认值
-  private generateDefaultSummary(): ReviewSummary {
-    return {
-      totalIssues: 0,
-      criticalIssues: 0,
-      majorIssues: 0,
-      minorIssues: 0,
-      score: 100 // 默认满分
-    };
-  }
-  
   // 健康检查
   async healthCheck(): Promise<boolean> {
     try {
