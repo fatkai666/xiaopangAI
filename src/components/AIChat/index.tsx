@@ -4,10 +4,10 @@ import { codeReviewService } from '../../services/codeReviewService';
 import ReactMarkdown from 'react-markdown';
 import './index.css';
 
-// 聊天模式类型
+// Chat mode types
 type ChatMode = 'chat' | 'code-review';
 
-// 消息接口
+// Message interface
 interface Message {
   role: 'user' | 'assistant';
   content: string;
@@ -52,7 +52,7 @@ interface ChatWithAIVariables {
   conversationId?: string | null;
 }
 
-// GraphQL 变更操作定义
+// GraphQL mutation definition
 const CHAT_WITH_AI = gql`
   mutation ChatWithAI($message: String!, $conversationId: String) {
     chatWithAI(message: $message, conversationId: $conversationId) {
@@ -73,25 +73,25 @@ const AIChat: React.FC = () => {
   const [chatMode, setChatMode] = useState<ChatMode>('chat');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // 执行 GraphQL 变更的钩子
+  // GraphQL mutation hook
   const [chatWithAI] = useMutation<ChatWithAIData, ChatWithAIVariables>(CHAT_WITH_AI);
 
-  // 自动滚动到最新消息
+  // Auto-scroll to latest message
   const scrollToBottom = (): void => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // 监听消息变化，自动滚动
+  // Listen for message changes and auto-scroll
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
-  // 初始化欢迎消息
+  // Initialize welcome message
   useEffect(() => {
     switchMode('chat');
   }, []);
 
-  // 处理聊天消息 - 聊天模式
+  // Process chat message - chat mode
   const handleChatMessage = async (userMessage: Message): Promise<void> => {
     try {
       const { data } = await chatWithAI({
@@ -121,17 +121,19 @@ const AIChat: React.FC = () => {
     }
   };
 
-  // 处理代码审查
+  // Process code review
   const handleCodeReview = async (userMessage: Message): Promise<void> => {
     try {
-      // 发送代码审查请求
+      // Send code review request
       const result = await codeReviewService.reviewCode(userMessage.content);
 
       if (result.success && result.review) {
-        // 创建代码审查消息
+        // Create code review message - preprocess the content to properly handle special characters
+        const processedContent = preprocessCodeReviewContent(result.review);
+
         const reviewMessage: Message = {
           role: 'assistant',
-          content: result.review,
+          content: processedContent,
           type: 'code-review',
           metadata: {
             messageId: result.meta?.messageId,
@@ -154,13 +156,25 @@ const AIChat: React.FC = () => {
     }
   };
 
-  // 处理发送消息
+  // Preprocess code review content to handle special characters
+  const preprocessCodeReviewContent = (content: string): string => {
+    let processedContent = content.replace(/\\n/g, '\n');
+    processedContent = processedContent.replace(/\\t/g, '\t');
+    processedContent = processedContent.replace(/\\"/g, '"');
+    processedContent = processedContent.replace(/\\'/g, "'");
+    processedContent = processedContent.replace(/```(\w*)\n([\s\S]*?)```/g, (match) => match);
+    processedContent = processedContent.replace(/\|\s*-+\s*\|/g, (match) => match);
+
+    return processedContent;
+  };
+
+  // Handle sending message
   const handleSendMessage = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
     if (!input.trim()) return;
 
-    // 显示用户消息
+    // Display user message
     const userMessage: Message = {
       role: 'user',
       content: input,
@@ -168,7 +182,7 @@ const AIChat: React.FC = () => {
     };
     setMessages(prev => [...prev, userMessage]);
 
-    // 清空输入框并显示加载状态
+    // Clear input and show loading state
     setInput('');
     setIsLoading(true);
 
@@ -183,10 +197,10 @@ const AIChat: React.FC = () => {
     }
   };
 
-  // 切换聊天模式
+  // Switch chat mode
   const switchMode = (mode: ChatMode): void => {
     setChatMode(mode);
-    // 清空消息历史并显示对应的欢迎消息
+    // Clear message history and display corresponding welcome message
     const welcomeMessage = mode === 'chat'
       ? '你好！我是 小胖砸，有什么我可以帮助你的吗？'
       : '你好！我是代码审查助手。请粘贴您的代码，我将为您提供详细的审查报告。';
@@ -199,7 +213,7 @@ const AIChat: React.FC = () => {
     setConversationId(null);
   };
 
-  // 渲染消息内容
+  // Render message content
   const renderMessageContent = (msg: Message): React.ReactNode => {
     if (msg.type === 'code-review' && msg.role === 'assistant' && msg.metadata) {
       return (
@@ -233,15 +247,27 @@ const AIChat: React.FC = () => {
       );
     }
 
-    // 对所有其他消息使用Markdown渲染
-    return (
-      <div className="message-content markdown-content">
-        <ReactMarkdown>{msg.content}</ReactMarkdown>
-      </div>
-    );
+    <button
+      return (
+        <div className="message-content markdown-content">
+          <ReactMarkdown>{msg.content}</ReactMarkdown>
+        </div>
+      );
   };
 
-  return (
+
+  {
+    chatMode === 'code-review' && (
+      <div className="code-review-info">
+        <div className="info-message">
+          <p>请将您的代码粘贴到下方输入框中，我将为您提供详细的代码审查报告。</p>
+        </div>
+      </div>
+    )
+  }
+
+  <div className="messages-container">
+    return (
     <div className="ai-chat-container">
       <div className="chat-header">
         <h2>{chatMode === 'chat' ? '小胖AI的聊天界面' : '代码审查助手'}</h2>
@@ -312,7 +338,6 @@ const AIChat: React.FC = () => {
       <form className="input-form" onSubmit={handleSendMessage}>
         <textarea
           value={input}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
           placeholder={chatMode === 'chat' ? '输入您的消息...' : '粘贴您的代码进行审查...'}
           disabled={isLoading}
           className={`input-field ${chatMode === 'code-review' ? 'code-input' : ''}`}
@@ -330,7 +355,7 @@ const AIChat: React.FC = () => {
         </button>
       </form>
     </div>
-  );
+    );
 };
 
-export default AIChat;
+    export default AIChat;
