@@ -1,9 +1,206 @@
+.review-summary {
+  background-color: #f5f5f5;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 12px;
+  border-left: 4px solid #4f7cac;
+}
+
+.review-summary h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.summary-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid #ddd;
+}
+
+.score-stat {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-color: #1976d2;
+}
+
+.critical-stat {
+  background-color: #ffebee;
+  color: #d32f2f;
+  border-color: #d32f2f;
+}
+
+.warning-stat {
+  background-color: #fff8e1;
+  color: #ff8f00;
+  border-color: #ff8f00;
+}
+
+.info-stat {
+  background-color: #e8f5e9;
+  color: #388e3c;
+  border-color: #388e3c;
+}
+.metadata-tag {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  margin-right: 4px;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.review-metadata {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.markdown-content {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.markdown-content h1 {
+  font-size: 1.4em;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+
+.markdown-content h2 {
+  font-size: 1.3em;
+}
+
+.markdown-content h3 {
+  font-size: 1.2em;
+}
+
+.markdown-content h4 {
+  font-size: 1.1em;
+}
+
+.markdown-content p {
+  margin: 8px 0;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.markdown-content li {
+  margin-bottom: 4px;
+}
+
+.markdown-content code {
+  background-color: #f6f8fa;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-family: "SFMono-Regular", "Monaco", "Inconsolata", "Fira Code", monospace;
+  font-size: 0.9em;
+}
+
+.markdown-content pre {
+  background-color: #f6f8fa;
+  padding: 12px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 10px 0;
+}
+
+.markdown-content pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 16px;
+  margin-left: 0;
+  color: #666;
+}
+
+.markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 12px 0;
+}
+
+.markdown-content table th,
+.markdown-content table td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+}
+
+.markdown-content table th {
+  background-color: #f6f8fa;
+  font-weight: 600;
+}
+
+.markdown-content img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.markdown-content strong {
+  font-weight: 600;
+}
+
+.markdown-content a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.markdown-content a:hover {
+  text-decoration: underline;
+}
+
+.code-review-info {
+  padding: 12px 20px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.info-message {
+  background-color: #e3f2fd;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border-left: 4px solid #1976d2;
+}
+
+.info-message p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
 .ai-chat-container {
   display: flex;
   flex-direction: column;
-  height: 600px;
+  height: 700px;
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   border: 1px solid #e1e1e1;
   border-radius: 12px;
@@ -23,9 +220,82 @@
 }
 
 .chat-header h2 {
-  margin: 0;
+  margin: 0 0 12px 0;
   font-size: 1.2rem;
   font-weight: 600;
+}
+
+/* 模式切换按钮 */
+.mode-toggle {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.mode-button {
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.mode-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mode-button.active {
+  background-color: white;
+  color: #4f7cac;
+  border-color: white;
+}
+
+/* 代码审查设置面板 */
+.code-review-settings {
+  padding: 16px 20px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #e1e1e1;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.setting-group label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666;
+}
+
+.language-select,
+.author-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.language-select:focus,
+.author-input:focus {
+  border-color: #4f7cac;
+}
+
+.language-select {
+  min-width: 120px;
+}
+
+.author-input {
+  min-width: 150px;
 }
 
 .messages-container {
@@ -79,6 +349,11 @@
   align-self: flex-start;
 }
 
+/* 代码审查消息特殊样式 */
+.code-review-message {
+  max-width: 95%;
+}
+
 .message-avatar {
   width: 36px;
   height: 36px;
@@ -118,6 +393,65 @@
   background-color: white;
   color: #333;
   border-bottom-left-radius: 4px;
+}
+
+/* 代码审查响应特殊样式 */
+.code-review-response {
+  max-width: 100%;
+}
+
+.code-review-response .message-content {
+  white-space: pre-wrap;
+  font-family: "SFMono-Regular", "Monaco", "Inconsolata", "Fira Code",
+    "Droid Sans Mono", "Source Code Pro", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.review-summary {
+  background-color: #f5f5f5;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 12px;
+  border-left: 4px solid #4f7cac;
+}
+
+.review-summary h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.summary-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  background-color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid #ddd;
+}
+
+.review-metadata {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.metadata-tag {
+  background-color: #e3f2fd;
+  color: #1976d2;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
 }
 
 .loading-indicator {
@@ -164,19 +498,31 @@
   position: relative;
 }
 
-.input-form input {
+.input-field {
   flex: 1;
   padding: 12px 16px;
   border: 1px solid #ddd;
-  border-radius: 24px;
+  border-radius: 12px;
   outline: none;
   font-size: 16px;
+  font-family: inherit;
   transition: border-color 0.2s, box-shadow 0.2s;
+  resize: vertical;
+  min-height: 44px;
+  max-height: 120px;
 }
 
-.input-form input:focus {
+.input-field:focus {
   border-color: #1976d2;
   box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+/* 代码输入框特殊样式 */
+.code-input {
+  font-family: "SFMono-Regular", "Monaco", "Inconsolata", "Fira Code",
+    "Droid Sans Mono", "Source Code Pro", monospace;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .input-form button {
@@ -191,6 +537,7 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.2s, color 0.2s, transform 0.1s;
+  align-self: flex-end;
 }
 
 .input-form button svg {
@@ -211,4 +558,37 @@
 .input-form button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .ai-chat-container {
+    height: 100vh;
+    max-width: 100%;
+    border-radius: 0;
+    border: none;
+  }
+
+  .code-review-settings {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .mode-toggle {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .summary-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .message {
+    max-width: 95%;
+  }
+
+  .code-review-message {
+    max-width: 98%;
+  }
 }
