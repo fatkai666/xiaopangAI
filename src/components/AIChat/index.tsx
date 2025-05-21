@@ -247,27 +247,25 @@ const AIChat: React.FC = () => {
       );
     }
 
-    <button
-      return (
-        <div className="message-content markdown-content">
-          <ReactMarkdown>{msg.content}</ReactMarkdown>
-        </div>
-      );
+    // For all other messages use Markdown rendering
+    return (
+      <div className="message-content markdown-content">
+        <ReactMarkdown>{msg.content}</ReactMarkdown>
+      </div>
+    );
   };
 
+  // Format code structure for code-review mode
+  const formatCodeInput = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    if (chatMode === 'code-review') {
+      // Auto-indent or format code here if needed
+      setInput(e.target.value);
+    } else {
+      setInput(e.target.value);
+    }
+  };
 
-  {
-    chatMode === 'code-review' && (
-      <div className="code-review-info">
-        <div className="info-message">
-          <p>请将您的代码粘贴到下方输入框中，我将为您提供详细的代码审查报告。</p>
-        </div>
-      </div>
-    )
-  }
-
-  <div className="messages-container">
-    return (
+  return (
     <div className="ai-chat-container">
       <div className="chat-header">
         <h2>{chatMode === 'chat' ? '小胖AI的聊天界面' : '代码审查助手'}</h2>
@@ -338,6 +336,7 @@ const AIChat: React.FC = () => {
       <form className="input-form" onSubmit={handleSendMessage}>
         <textarea
           value={input}
+          onChange={formatCodeInput}
           placeholder={chatMode === 'chat' ? '输入您的消息...' : '粘贴您的代码进行审查...'}
           disabled={isLoading}
           className={`input-field ${chatMode === 'code-review' ? 'code-input' : ''}`}
@@ -355,7 +354,7 @@ const AIChat: React.FC = () => {
         </button>
       </form>
     </div>
-    );
+  );
 };
 
-    export default AIChat;
+export default AIChat;
